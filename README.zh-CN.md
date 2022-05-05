@@ -13,10 +13,40 @@
 ```bash
 npm i vite-plugin-dynamic-base -D
 ```
+
+## 变更日志
+
+### 0.4.0
+
+_2022-05-01_
+
+#### 新特性
+
+- 兼容`vite-plugin-pwa`
+- base标记
+(从原来的自动寻找替换成使用base作为标记位去替换，这是为了更加准确的处理，同时在pwa中遇到一些场景需要使用base作为标记位)
+
+#### Bug 修复
+
+- 多层级cdn引用资源路径修复
+
+#### 重构
+
+- 更换匹配方案，使用base属性作为标记位
+- 代码结构调整，引入异步处理
+
+[变更日志](./CHANGELOG.zh-CN.md)
+
 ## 编译模式
 
 - [x] es
 - [x] system
+
+## 兼容插件
+
+- [x] [@vitejs/plugin-legacy](https://www.npmjs.com/package/@vitejs/plugin-legacy)
+- [x] [vite-plugin-pwa](https://www.npmjs.com/package/vite-plugin-pwa)
+
 
 ## 使用
 
@@ -24,7 +54,9 @@ npm i vite-plugin-dynamic-base -D
 // vite.config.ts
 import { dynamicBase } from 'vite-plugin-dynamic-base'
 
-export default defineConfig({
+export default defineConfig({ 
+  // base: "/",
+  base: process.env.NODE_ENV === "production" ? "/__dynamic_base__/" : "/",
   plugins: [
     dynamicBase({ /* options */ }),
   ],
