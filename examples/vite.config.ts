@@ -8,14 +8,17 @@ import { VitePWA } from 'vite-plugin-pwa'
 // https://vitejs.dev/config/
 export default defineConfig({
   // base: 'a/b',
-  base: process.env.NODE_ENV === "production" ? "/__dynamic_base__/" : "/",
+  // base: process.env.NODE_ENV === "production" ? "/__dynamic_base__/" : "/",
   plugins: [
     legacy({
       targets: ['ie >= 11'],
       additionalLegacyPolyfills: ['regenerator-runtime/runtime']
     }),
     vue(),
-    VitePWA({}),
+    VitePWA({
+      mode: 'development',
+      base: 'http://localhost:8080/',
+    }),
     dynamicBase({ transformIndexHtml: true }),
   ],
   build: {
